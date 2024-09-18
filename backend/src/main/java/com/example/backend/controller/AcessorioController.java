@@ -1,11 +1,11 @@
 package com.example.backend.controller;
 
-import com.example.backend.dto.AtualizaVeiculoFormDTO;
-import com.example.backend.dto.DetalhesVeiculoDTO;
-import com.example.backend.dto.VeiculoDTO;
-import com.example.backend.dto.VeiculoFormDTO;
-import com.example.backend.entity.Veiculo;
-import com.example.backend.repository.VeiculoRepository;
+import com.example.backend.dto.AcessorioDTO;
+import com.example.backend.dto.AcessorioFormDTO;
+import com.example.backend.dto.AtualizaAcessorioFormDTO;
+import com.example.backend.dto.DetalhesAcessorioDTO;
+import com.example.backend.entity.Acessorio;
+import com.example.backend.repository.AcessorioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -15,39 +15,39 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
-public class VeiculoController {
+public class AcessorioController {
 
     @Autowired
-    private VeiculoRepository veiculoRepository;
+    private AcessorioRepository acessorioRepository;
 
     @GetMapping
-    public List<VeiculoDTO> listar() {
-        List<Veiculo> veiculos = veiculoRepository.findAll();
-        return VeiculoDTO.converter(veiculos);
+    public List<AcessorioDTO> listar() {
+        List<Acessorio> acessorios = acessorioRepository.findAll();
+        return AcessorioDTO.converter(acessorios);
     }
 
     @Transactional
     @PostMapping
-    public VeiculoDTO salvar(@RequestBody VeiculoFormDTO form) {
-        Veiculo veiculo = form.converter();
-        veiculoRepository.save(veiculo);
-        return new VeiculoDTO(veiculo);
+    public AcessorioDTO salvar(@RequestBody AcessorioFormDTO form) {
+        Acessorio acessorio = form.converter();
+        acessorioRepository.save(acessorio);
+        return new AcessorioDTO(acessorio);
     }
 
     @Transactional
     @PutMapping("/{id}")
-    public DetalhesVeiculoDTO atualizar(@PathVariable Long id, @RequestBody AtualizaVeiculoFormDTO form) {
+    public DetalhesAcessorioDTO atualizar(@PathVariable Long id, @RequestBody AtualizaAcessorioFormDTO form) {
 
-        final Optional<Veiculo> optVeiculo = veiculoRepository.findById(id);
+        final Optional<Acessorio> optAcessorio = acessorioRepository.findById(id);
 
-        if(optVeiculo.isPresent()){
-            Veiculo veiculo = optVeiculo.get();
-            form.atualiza(veiculo);
-            veiculoRepository.save(veiculo);
-            return new DetalhesVeiculoDTO(veiculo);
+        if(optAcessorio.isPresent()){
+            Acessorio acessorio = optAcessorio.get();
+            form.atualiza(acessorio);
+            acessorioRepository.save(acessorio);
+            return new DetalhesAcessorioDTO(acessorio);
         }
 
-        System.out.println("Veículo não encontrado");
+        System.out.println("Acessório não encontrado");
         return null;
     }
 
@@ -55,10 +55,10 @@ public class VeiculoController {
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
 
-        final Optional<Veiculo> optVeiculo = veiculoRepository.findById(id);
+        final Optional<Acessorio> optAcessorio = acessorioRepository.findById(id);
 
-        if (optVeiculo.isPresent()) {
-            veiculoRepository.deleteById(id);
+        if (optAcessorio.isPresent()) {
+            acessorioRepository.deleteById(id);
         }
 
     }

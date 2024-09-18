@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import com.example.backend.entity.Acessorio;
 
 @Entity
 @Getter
@@ -50,11 +51,4 @@ public class Veiculo {
         this.placa = placa;
     }
 
-    public void addAcessorio() {
-        Acessorio acessorio = add.acessorio();
-    }
-
-    public void removeAcessorio() {
-        Acessorio acessorio = remove.acessorio();
-    }
 }

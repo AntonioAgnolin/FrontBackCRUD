@@ -1,9 +1,10 @@
 package com.example.backend.repository;
 
 import com.example.backend.entity.Acessorio;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-public class AcessorioRepository {
+@Repository
+public interface AcessorioRepository extends JpaRepository<Acessorio, Long> {
 
 }

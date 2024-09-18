@@ -2,8 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import AddScreen from '../../screens/AddScreen';
-import RemoveScreen from '../../screens/RemoveScreen';
+import AddScreen from '../../screens/VeiculoScreen';
+import RemoveScreen from '../../screens/AdesivoScreen';
  
 const { Navigator, Screen } = createBottomTabNavigator();
  
