@@ -2,15 +2,15 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import AddScreen from '../../screens/VeiculoScreen';
-import RemoveScreen from '../../screens/AdesivoScreen';
- 
-const { Navigator, Screen } = createBottomTabNavigator();
- 
-function AppTab() {
+import VeiculoScreen from '../../app/(tabs)/VeiculoScreen';
+import AcessorioScreen from '../../app/(tabs)/AcessorioScreen';
+
+const Tab = createBottomTabNavigator();
+
+const AppTab: React.FC = () => {
     return (
         <NavigationContainer>
-            <Navigator
+            <Tab.Navigator
                 screenOptions={{
                     tabBarActiveTintColor: "#32264d",
                     tabBarInactiveTintColor: "#c1bccc",
@@ -27,19 +27,23 @@ function AppTab() {
                     tabBarIconStyle: { display: "none" }
                 }}
             >
-                <Screen name="AddScreen" component={AddScreen}
+                <Tab.Screen 
+                    name="Veiculo"
+                    component={VeiculoScreen}
                     options={{
-                        tabBarLabel: "Adicionar"
-                    }}
+                        tabBarLabel: "Veículo"
+                    }} 
                 />
-                <Screen name="RemoveScreen" component={RemoveScreen}
+                <Tab.Screen 
+                    name="Acessorio" 
+                    component={AcessorioScreen}
                     options={{
-                        tabBarLabel: "Remover"
-                    }}
+                        tabBarLabel: "Acessório"
+                    }} 
                 />
-            </Navigator>
+            </Tab.Navigator>
         </NavigationContainer>
     );
-}
- 
+};
+
 export default AppTab;
