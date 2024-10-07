@@ -1,23 +1,31 @@
 package com.example.backend.entity;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import com.example.backend.entity.Acessorio;
 
+import java.util.List;
+
 @Entity
 @Getter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "VEICULO")
 public class Veiculo {
 
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column (name = "ID_VEICULO")
     private Long id;
     private String modelo;
     private Integer anoFabricacao;
     private String placa;
+    @OneToMany(mappedBy = "veiculo", orphanRemoval = true)
+    private List<Acessorio> acessorios;
 
     public Long getId() {
         return id;

@@ -1,84 +1,82 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
- 
-async function saveVeiculo(listVeiculo){
-    listVeiculo.id = id ? id : new Date().getTime()
+
+async function saveVeiculo(listVeiculo, id) {
+    listVeiculo.id = id ? id : new Date().getTime();
     const savedVeiculos = await getVeiculos();
- 
-    if(id){
-        const index = await savedVeiculos.findIndex(veiculo => veiculo.id === id);
-        savedVeiculos[index] = listVeiculo;
+
+    if (id) {
+        const index = savedVeiculos.findIndex(veiculo => veiculo.id === id);
+        if (index !== -1) {
+            savedVeiculos[index] = listVeiculo;
+        }
+    } else {
+        savedVeiculos.push(listVeiculo);
     }
-    else
-      savedVeiculos.push(listVeiculo);
- 
-    return AsyncStorage.setVeiculo('veiculos', JSON.stringify(savedVeiculos));
+
+    return AsyncStorage.setItem('veiculos', JSON.stringify(savedVeiculos));
 }
 
-function getVeiculos(){
-    return AsyncStorage.getVeiculo('veiculos')
-            .then(response => {
-                if(response)
-                    return Promise.resolve(JSON.parse(response));
-                else
-                    return Promise.resolve([]);
-            })
+async function getVeiculos() {
+    const response = await AsyncStorage.getItem('veiculos');
+    return response ? JSON.parse(response) : [];
 }
 
-async function getVeiculo(id){
+async function getVeiculo(id) {
     const savedVeiculos = await getVeiculos();
     return savedVeiculos.find(veiculo => veiculo.id === id);
 }
 
-async function deleteVeiculo(id){
+async function deleteVeiculo(id) {
     let savedVeiculos = await getVeiculos();
-    const index = await savedVeiculos.findIndex(veiculo => veiculo.id === id);
-    savedVeiculos.splice(index, 1);
-    return AsyncStorage.setVeiculo('veiculos', JSON.stringify(savedVeiculos));
-}
-
-async function saveAdesivo(listAdesivo){
-    listAdesivo.id = id ? id : new Date().getTime()
-    const savedAdesivos = await getAdesivos();
- 
-    if(id){
-        const index = await savedAdesivos.findIndex(adesivo => adesivo.id === id);
-        savedAdesivos[index] = listAdesivo;
+    const index = savedVeiculos.findIndex(veiculo => veiculo.id === id);
+    if (index !== -1) {
+        savedVeiculos.splice(index, 1);
     }
-    else
-      savedAdesivos.push(listAdesivo);
- 
-    return AsyncStorage.setAdesivo('adesivos', JSON.stringify(savedAdesivos));
+    return AsyncStorage.setItem('veiculos', JSON.stringify(savedVeiculos));
 }
 
-function getAdesivos(){
-    return AsyncStorage.getAdesivo('adesivos')
-            .then(response => {
-                if(response)
-                    return Promise.resolve(JSON.parse(response));
-                else
-                    return Promise.resolve([]);
-            })
+async function saveAcessorio(listAcessorio, id) {
+    listAcessorio.id = id ? id : new Date().getTime();
+    const savedAcessorios = await getAcessorios();
+
+    if (id) {
+        const index = savedAcessorios.findIndex(acessorio => acessorio.id === id);
+        if (index !== -1) {
+            savedAcessorios[index] = listAcessorio;
+        }
+    } else {
+        savedAcessorios.push(listAcessorio);
+    }
+
+    return AsyncStorage.setItem('acessorios', JSON.stringify(savedAcessorios));
 }
 
-async function getAdesivo(id){
-    const savedAdesivos = await getAdesivos();
-    return savedAdesivos.find(adesivo => adesivo.id === id);
+async function getAcessorios() {
+    const response = await AsyncStorage.getItem('acessorios');
+    return response ? JSON.parse(response) : [];
 }
 
-async function deleteAdesivo(id){
-    let savedAdesivos = await getAdesivos();
-    const index = await savedAdesivos.findIndex(adesivo => adesivo.id === id);
-    savedAdesivos.splice(index, 1);
-    return AsyncStorage.setAdesivo('adesivos', JSON.stringify(savedAdesivos));
+async function getAcessorio(id) {
+    const savedAcessorios = await getAcessorios();
+    return savedAcessorios.find(acessorio => acessorio.id === id);
 }
- 
-module.exports = {
+
+async function deleteAcessorio(id) {
+    let savedAcessorios = await getAcessorios();
+    const index = savedAcessorios.findIndex(acessorio => acessorio.id === id);
+    if (index !== -1) {
+        savedAcessorios.splice(index, 1);
+    }
+    return AsyncStorage.setItem('acessorios', JSON.stringify(savedAcessorios));
+}
+
+export {
     saveVeiculo,
     getVeiculos,
     getVeiculo,
     deleteVeiculo,
-    saveAdesivo,
-    getAdesivos,
-    getAdesivo,
-    deleteAdesivo
-}
+    saveAcessorio,
+    getAcessorios,
+    getAcessorio,
+    deleteAcessorio
+};

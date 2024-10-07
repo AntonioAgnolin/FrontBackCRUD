@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@RequestMapping("/api/acessorio")
 @RestController
 @CrossOrigin(origins = "*")
 public class AcessorioController {
